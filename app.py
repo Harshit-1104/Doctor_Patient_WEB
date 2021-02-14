@@ -300,6 +300,23 @@ def otpVerify():
     return render_template('otpVerify.html', form=request.form)
 
 
+#########################################################################################
+
+
+@app.route('/Delete_verify_OTP')
+def Delete_verify_OTP():
+    global DocForm
+    time.sleep(30)
+
+    OTPs = db.child("OTPs2").get().val()
+    for OTP in OTPs:
+        if OTPs[OTP]['email'] == DocForm.email.data:
+            db.child("OTPs2/" + OTP).remove()
+            break
+    flash('OTP Expired, Try again', 'danger')
+    return redirect(url_for('register'))         
+
+
 ############################################ Login
 @app.route('/login')
 def login():
@@ -528,6 +545,16 @@ def update_my_profile():
     f_data = request.form
 
     file = request.files['files']
+    name_file= request.files['files'].filename
+    print(len(name_file))
+    if len(name_file):
+        file = Image.open(file)
+        file.save("tmp.jpeg", "JPEG")
+        filepath = "doctor_profile/" + session['username'] + "/" + str(time.time()) + ".jpeg"
+        storage.child(filepath).put("tmp.jpeg")
+        url = storage.child(filepath).get_url(None)
+        db.child("Users/Doctors/" + session['doc_ses_id']).update({"profile_img":url})
+        os.remove("tmp.jpeg")
 
     address = {
         'city': f_data['city'],
@@ -535,14 +562,6 @@ def update_my_profile():
         'country': f_data['country'],
         'pincode': f_data['city_pin']
     }
-
-    file = Image.open(file)
-    file.save("tmp.jpeg", "JPEG")
-    filepath = "doctor_profile/" + session['username'] + "/" + str(time.time()) + ".jpeg"
-    storage.child(filepath).put("tmp.jpeg")
-    url = storage.child(filepath).get_url(None)
-    db.child("Users/Doctors/" + session['doc_ses_id']).update({"profile_img":url})
-    os.remove("tmp.jpeg")
 
     db.child("Users/Doctors/" + session['doc_ses_id'] + '/address').update(address)
     db.child("Users/Doctors/" + session['doc_ses_id']).update({"specialist": f_data['specialist']})
