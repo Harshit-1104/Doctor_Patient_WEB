@@ -39,7 +39,7 @@ type Bank struct {
 }
 
 func (c *Bank) isEmpty() bool {
-	return c == nil || c.ID == 0
+	return c == nil || (c.ID == 0 && c.stat == "")
 }
 
 type BankProto struct {
