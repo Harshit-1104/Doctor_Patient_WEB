@@ -103,6 +103,7 @@ class OTPVerify(Form):
 
 @app.route('/')
 def index():
+
     form1 = PatLoginForm(request.form)
     form2 = DocLoginForm(request.form)
     return render_template('login.html', form1=form1, form2=form2)
@@ -111,6 +112,7 @@ def index():
 ##########################################Uploading reports
 @app.route('/pat_upload', methods=['GET', 'POST'])
 def pat_upload():
+
     if request.method == 'POST':
         f_data=request.form['Note']
         print(f_data)
@@ -143,6 +145,7 @@ def pat_upload():
 
 @app.route('/doc_upload', methods=['GET', 'POST'])
 def doc_upload():
+
     if request.method == 'POST':
         file = request.files['file']
         file = Image.open(file)
@@ -181,12 +184,14 @@ def doc_upload():
 ############################################## Register
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+
     form1 = PatRegisterForm(request.form)
     form2 = DocRegisterForm(request.form)
     return render_template('register.html', form1=form1, form2=form2)
 
 @app.route('/patRegister', methods=['GET', 'POST'])
 def patRregister():
+
     form = PatRegisterForm(request.form)
     if request.method == 'POST' and form.validate():
         email = form.email.data
@@ -219,6 +224,7 @@ def patRregister():
 
 @app.route('/docVerify', methods=['GET', 'POST'])
 def docVerify():
+
     global DocForm
     form = DocRegisterForm(request.form)
 
@@ -248,6 +254,7 @@ def docVerify():
 
 @app.route('/otpVerify', methods=['GET', 'POST'])
 def otpVerify():
+
     global DocForm
 
     if request.method == 'POST':
@@ -296,6 +303,7 @@ def otpVerify():
 #########################################################################################
 @app.route('/Delete_verify_OTP')
 def Delete_verify_OTP():
+
     global DocForm
     time.sleep(30)
 
@@ -311,11 +319,13 @@ def Delete_verify_OTP():
 ############################################ Login
 @app.route('/login')
 def login():
+
     return redirect(url_for('index'))
 
 
 @app.route('/docLogin', methods=['POST'])
 def docLogin():
+
     form = DocLoginForm(request.form)
     if form.validate():
         email = form.email.data
@@ -362,6 +372,7 @@ def docLogin():
     return render_template('login.html', form2=form, form1=form)
 @app.route('/patLogin', methods=['POST'])
 def patLogin():
+    
     form = PatLoginForm(request.form)
     if form.validate():
         email = form.email.data
