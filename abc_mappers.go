@@ -22,8 +22,20 @@ func toProtoFromCustomer(cust *Customer) *CustomerProto {
 	}
 }
 
+type SubBank struct {
+	ID   int
+	stat string
+}
+
+type SubBankProto struct {
+	ID   int
+	stat string
+}
+
 type Bank struct {
-	ID int
+	ID      int
+	stat    string
+	SubBank *SubBank
 }
 
 func (c *Bank) isEmpty() bool {
@@ -31,7 +43,9 @@ func (c *Bank) isEmpty() bool {
 }
 
 type BankProto struct {
-	ID int
+	ID      int
+	stat    string
+	SubBank *SubBankProto
 }
 
 func toProtoFromBank(bank *Bank) *BankProto {
@@ -39,7 +53,14 @@ func toProtoFromBank(bank *Bank) *BankProto {
 		return nil
 	}
 
+	subBankProto := &SubBankProto{
+		ID:   bank.SubBank.ID,
+		stat: bank.SubBank.stat,
+	}
+
 	return &BankProto{
-		ID: bank.ID,
+		ID:      bank.ID,
+		stat:    bank.stat,
+		SubBank: subBankProto,
 	}
 }
