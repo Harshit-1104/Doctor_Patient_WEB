@@ -94,15 +94,11 @@ class PatLoginForm(Form):
     password = PasswordField('Password', [
         validators.DataRequired()
     ])
-
-
 class OTPVerify(Form):
     otp = StringField('OTP', [
         validators.DataRequired(),
         validators.Length(min=6, max=6)
     ])
-
-
 @app.route('/')
 def index():
     form1 = PatLoginForm(request.form)
@@ -141,8 +137,6 @@ def pat_upload():
 
     this_User = session['username']
     return render_template("pat_upload.html", this_User=this_User)
-
-
 @app.route('/doc_upload', methods=['GET', 'POST'])
 def doc_upload():
     if request.method == 'POST':
@@ -179,16 +173,12 @@ def doc_upload():
 
     this_User = session['username']
     return render_template("pat_upload.html", this_User=this_User)
-
-
 ############################################## Register
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form1 = PatRegisterForm(request.form)
     form2 = DocRegisterForm(request.form)
     return render_template('register.html', form1=form1, form2=form2)
-
-
 @app.route('/patRegister', methods=['GET', 'POST'])
 def patRregister():
     form = PatRegisterForm(request.form)
@@ -220,8 +210,6 @@ def patRregister():
         return redirect(url_for('login'))
 
     return redirect(url_for('register'))
-
-
 @app.route('/docVerify', methods=['GET', 'POST'])
 def docVerify():
     global DocForm
@@ -250,8 +238,6 @@ def docVerify():
         return redirect(url_for('otpVerify'))
 
     return redirect(url_for('register'))
-
-
 @app.route('/otpVerify', methods=['GET', 'POST'])
 def otpVerify():
     global DocForm
@@ -301,8 +287,6 @@ def otpVerify():
 
 
 #########################################################################################
-
-
 @app.route('/Delete_verify_OTP')
 def Delete_verify_OTP():
     global DocForm
@@ -369,8 +353,6 @@ def docLogin():
             return redirect(url_for('doc_dashboard'))
 
     return render_template('login.html', form2=form, form1=form)
-
-
 @app.route('/patLogin', methods=['POST'])
 def patLogin():
     form = PatLoginForm(request.form)
