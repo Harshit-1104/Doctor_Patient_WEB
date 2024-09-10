@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: PR Agent action step
         id: pragent
-        uses: zoro2001411/pr-agent:latest
+        uses: docker://zoro2001411/pr-agent:latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GROQ_KEY: ${{ secrets.GROQ_KEY }}
