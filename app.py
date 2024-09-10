@@ -418,12 +418,11 @@ def is_logged_in(f):
 
     return wrap
 
+
 @app.route('/Delete_OTP')
 def Delete_OTP():
     time.sleep(10)
     this_OTP = ""
-
-
 
     if len(session['email']):
         OTPs = db.child("OTPs").get().val()
