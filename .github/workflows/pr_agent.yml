@@ -1,8 +1,8 @@
 on:
   pull_request:
     types: [opened, reopened, ready_for_review]
-  branches:
-    - main
+    branches:
+      - main
 jobs:
   pr_agent_job:
     if: ${{ github.event.sender.type != 'Bot' }}
