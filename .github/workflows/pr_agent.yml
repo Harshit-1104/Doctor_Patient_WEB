@@ -17,6 +17,5 @@ jobs:
         id: pragent
         uses: zoro2001411/pr-agent:latest
         env:
-          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GROQ_KEY: ${{ secrets.GROQ_KEY }}
