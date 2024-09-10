@@ -418,18 +418,6 @@ def is_logged_in(f):
 
     return wrap
 
-
-@app.route('/PatAccessDocOTP', methods=['POST'])
-def PatAccessDocOTP():
-    OTP = OTP_gen()
-    db.child("OTPs").push({
-        "patient_id": session['patient_id'],
-        "OTP": OTP
-    })
-    this_User = session['username']
-    return render_template('pat_dashboard.html', OTP=OTP, this_User=this_User)
-
-
 @app.route('/Delete_OTP')
 def Delete_OTP():
     time.sleep(10)
@@ -447,6 +435,15 @@ def Delete_OTP():
     flash("Your OTP has expired!", "success")
     return render_template('pat_dashboard.html', OTP=this_OTP, this_User=this_User)
 
+@app.route('/PatAccessDocOTP', methods=['POST'])
+def PatAccessDocOTP():
+    OTP = OTP_gen()
+    db.child("OTPs").push({
+        "patient_id": session['patient_id'],
+        "OTP": OTP
+    })
+    this_User = session['username']
+    return render_template('pat_dashboard.html', OTP=OTP, this_User=this_User)
 
 # Dashboard part
 ###########################################################################################
