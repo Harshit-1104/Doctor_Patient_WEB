@@ -423,13 +423,14 @@ def Delete_OTP():
     time.sleep(10)
     this_OTP = ""
 
+
+
     if len(session['email']):
         OTPs = db.child("OTPs").get().val()
         for OTP in OTPs:
             if OTPs[OTP]['patient_id'] == session['patient_id']:
                 db.child("OTPs/" + OTP).remove()
                 break
-
 
     this_User = session['username']
     flash("Your OTP has expired!", "success")
